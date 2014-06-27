@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue"
+    >
+
+    <ImageView
+        android:id="@+id/image_title"
+        android:layout_width="235dp"
+        android:layout_height="75dp"
+        android:scaleType="fitCenter"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/index_title"
+        android:layout_marginTop="35dp"
+         />
+
+    <ImageButton
+        android:id="@+id/image_camera"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/image_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@color/blue"
+        android:src="@drawable/index_camera" />
+    
+    <ImageView
+        android:id="@+id/image_line"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/image_camera"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/blue"
+        android:src="@drawable/index_line" />
+    
+     <ImageButton
+        android:id="@+id/index_search"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/image_line"
+        android:layout_centerHorizontal="true"
+        android:background="@color/blue"
+        android:src="@drawable/index_search" />
+     
+     <ImageButton
+        android:id="@+id/index_phone"
+        android:layout_width="95dp"
+        android:layout_height="81dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/index_search"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@color/blue"
+        android:src="@drawable/index_phone" />
+
+     <ImageButton
+         android:id="@+id/index_gralloc"
+         android:layout_width="91dp"
+         android:layout_height="81dp"
+         android:layout_alignTop="@+id/index_phone"
+         android:layout_toLeftOf="@+id/index_search"
+         android:background="@color/blue"
+         android:scaleType="fitCenter"
+         android:src="@drawable/index_gralloc" />
+
+     <ImageButton
+         android:id="@+id/index_people"
+         android:layout_width="81dp"
+         android:layout_height="81dp"
+         android:layout_alignTop="@+id/index_phone"
+         android:layout_toRightOf="@+id/index_search"
+         android:background="@color/blue"
+         android:scaleType="fitCenter"
+         android:src="@drawable/index_people" />
+	
+</RelativeLayout>
