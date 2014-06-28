@@ -3,6 +3,7 @@ package com.arc.on_the_road;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -14,14 +15,18 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 public class MainActivity extends Activity {
-	String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-	String basepath = extStorageDirectory + "/ESOC_face/";
 	
 	ImageButton ImageButton_Camera;
 	ImageButton ImageButton_Search;
 	ImageButton ImageButton_Gralloc;
 	ImageButton ImageButton_Phone;	
 	ImageButton ImageButton_People;
+	
+	private static final int ACTIVITY_SELECT_CAMERA = 0;
+	private static final int ACTIVITY_SELECT_Search = 1;
+	private static final int ACTIVITY_SELECT_Phone = 2;
+	private static final int ACTIVITY_SELECT_Grolloc = 3;
+	private static final int ACTIVITY_SELECT_People = 4;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -73,6 +78,9 @@ public class MainActivity extends Activity {
 		            break;
 		            case R.id.index_phone:
 		            	Log.i("On the road index", "phone");
+		            	Intent intent = new Intent();
+		    			intent.setClass(MainActivity.this,PhoneActivity.class);
+		    			startActivityForResult(intent, ACTIVITY_SELECT_Phone);
 		            break;
 		            case R.id.index_people:
 		            	Log.i("On the road index", "people");

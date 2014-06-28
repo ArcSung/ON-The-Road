@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="com.arc.on_the_road.PhoneActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>     
 
 </manifest>
