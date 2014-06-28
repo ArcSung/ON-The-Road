@@ -40,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,21 +104,17 @@ public class PhoneActivity extends Activity {
 		linear.setBackgroundColor(R.color.black);
 		
 		ImageView AboutImage = new ImageView(this);
-		AboutImage.setImageResource(R.drawable.phone_about_content);
+		AboutImage.setImageResource(R.drawable.phone_about_view);
 		AboutImage.setColorFilter(R.color.black);
-							
-		ImageButton AboutImagebutton = new ImageButton(this);
-		AboutImagebutton.setImageResource(R.drawable.phone_about_button);
-		AboutImagebutton.setColorFilter(R.color.black);
-
+		AboutImage.setScaleType(ScaleType.FIT_XY);
+		
 	    linear.addView(AboutImage);
-	    linear.addView(AboutImagebutton);
 	    builder.setView(linear); 
 				
 	    final AlertDialog About_Dialog = builder.create();
 	    About_Dialog.show();
 	    
-		AboutImagebutton.setOnClickListener(new ImageButton.OnClickListener() 
+	    AboutImage.setOnClickListener(new ImageButton.OnClickListener() 
 		{
 			   public void onClick(View v)
 				{
