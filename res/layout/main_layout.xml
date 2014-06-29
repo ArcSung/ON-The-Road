@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/image_title"
-        android:layout_width="235dp"
-        android:layout_height="75dp"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:layout_centerHorizontal="true"
         android:src="@drawable/index_title"
@@ -18,8 +18,8 @@
 
     <ImageButton
         android:id="@+id/index_camera"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/image_title"
         android:layout_centerHorizontal="true"
@@ -29,7 +29,7 @@
     
     <ImageView
         android:id="@+id/image_line"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="44dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/index_camera"
@@ -40,8 +40,8 @@
     
      <ImageButton
         android:id="@+id/index_search"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/image_line"
         android:layout_centerHorizontal="true"
@@ -50,7 +50,7 @@
      
      <ImageButton
         android:id="@+id/index_phone"
-        android:layout_width="95dp"
+        android:layout_width="81dp"
         android:layout_height="81dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/index_search"
@@ -61,10 +61,10 @@
 
      <ImageButton
          android:id="@+id/index_gralloc"
-         android:layout_width="91dp"
+         android:layout_width="81dp"
          android:layout_height="81dp"
          android:layout_alignTop="@+id/index_phone"
-         android:layout_toLeftOf="@+id/index_search"
+         android:layout_toLeftOf="@+id/image_title"
          android:background="@color/blue"
          android:scaleType="fitCenter"
          android:src="@drawable/index_gralloc" />
@@ -74,7 +74,7 @@
          android:layout_width="81dp"
          android:layout_height="81dp"
          android:layout_alignTop="@+id/index_phone"
-         android:layout_toRightOf="@+id/index_search"
+         android:layout_toRightOf="@+id/image_title"
          android:background="@color/blue"
          android:scaleType="fitCenter"
          android:src="@drawable/index_people" />
