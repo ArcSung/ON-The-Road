@@ -86,6 +86,16 @@ public class PhoneActivity extends Activity {
 		    public void onClick(View v) {
 		// TODO Auto-generated method stub
 		        switch(v.getId()){
+	            	case R.id.phone_road:
+	            		 String phoneNumber_road = "062932689"; 
+	            		 Intent intentDial_raod = new Intent("android.intent.action.CALL",Uri.parse("tel:"+phoneNumber_road));
+	  				   	 startActivity(intentDial_raod);
+	  				break;   	 
+	            	case R.id.phone_city:
+	            		 String phoneNumber_city = "1999"; 
+	   				     Intent intentDial_city = new Intent("android.intent.action.CALL",Uri.parse("tel:"+phoneNumber_city));
+	   				     startActivity(intentDial_city);
+	   				break;     
 		            case R.id.phone_about:
 		            	About_Dialog();
 		            break;
@@ -101,11 +111,9 @@ public class PhoneActivity extends Activity {
 		// Setting_Dialog UI set up
 		LinearLayout linear=new LinearLayout(this);
 		linear.setOrientation(1);
-		linear.setBackgroundColor(R.color.black);
 		
 		ImageView AboutImage = new ImageView(this);
 		AboutImage.setImageResource(R.drawable.phone_about_view);
-		AboutImage.setColorFilter(R.color.black);
 		AboutImage.setScaleType(ScaleType.FIT_XY);
 		
 	    linear.addView(AboutImage);

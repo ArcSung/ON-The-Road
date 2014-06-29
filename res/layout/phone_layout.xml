@@ -3,15 +3,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <ImageButton
-        android:id="@+id/phone_about"
-        android:layout_width="fill_parent"
+    
+     <ImageButton
+        android:id="@+id/phone_road"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="#ff606060"
-        android:src="@drawable/phone_about" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#ff000000"
+        android:src="@drawable/phone_road" />
+     
+      <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/phone_road"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/phone_mainbitmap" />
 
     <ImageButton
         android:id="@+id/phone_city"
@@ -23,22 +32,15 @@
         android:background="#ff000000"
         android:src="@drawable/phone_city" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/phone_mainbitmap" />
 
+    
     <ImageButton
-        android:id="@+id/phone_road"
-        android:layout_width="wrap_content"
+        android:id="@+id/phone_about"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="#ff000000"
-        android:src="@drawable/phone_road" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#ff606060"
+        android:src="@drawable/phone_about" />
 
 </RelativeLayout>
