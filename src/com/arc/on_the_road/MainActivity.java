@@ -64,7 +64,8 @@ public class MainActivity extends Activity {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	    Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 	    
-	    init_index_preview();		
+	    //init_index_preview();	
+	    init_index_ui();
 	}	
 	
 	private void init_index_preview()
@@ -119,12 +120,15 @@ public class MainActivity extends Activity {
 		            break;
 		            case R.id.index_phone:
 		            	Log.i("On the road index", "phone");
-		            	Intent intent = new Intent();
-		    			intent.setClass(MainActivity.this,PhoneActivity.class);
-		    			startActivityForResult(intent, ACTIVITY_SELECT_Phone);
+		            	Intent intent_phone = new Intent();
+		            	intent_phone.setClass(MainActivity.this,PhoneActivity.class);
+		    			startActivityForResult(intent_phone, ACTIVITY_SELECT_Phone);
 		            break;
 		            case R.id.index_people:
 		            	Log.i("On the road index", "people");
+		            	Intent intent_people = new Intent();
+		    			intent_people.setClass(MainActivity.this,PeopleActivity.class);
+		    			startActivityForResult(intent_people, ACTIVITY_SELECT_Phone);
 		            break;
 		        }
 		    } 

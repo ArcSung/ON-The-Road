@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+
+    <ImageView
+        android:id="@+id/people_inof"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:layout_centerInParent="true"
+        android:src="@drawable/people_name" 
+     />
+
+    <ImageView
+        android:id="@+id/people_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/people_inof"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/people_littlehead" />
+    
+    
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+                android:gravity="center" 
+        android:layout_below="@+id/people_inof"
+        android:layout_centerHorizontal="true"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+    
+      <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edittext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:background="#ffffffff"
+        android:text="Next" />
+
+/>
+
+</RelativeLayout>

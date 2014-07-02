@@ -13,30 +13,28 @@
         android:scaleType="fitCenter"
         android:layout_centerHorizontal="true"
         android:src="@drawable/index_title"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
          />
 
-    <ImageButton
-        android:id="@+id/index_camera"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:scaleType="fitCenter"
-        android:layout_below="@+id/image_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:background="@color/blue"
-        android:src="@drawable/index_camera" />
     
     <ImageView
         android:id="@+id/image_line"
         android:layout_width="250dp"
         android:layout_height="44dp"
         android:scaleType="fitCenter"
-        android:layout_below="@+id/index_camera"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:background="@color/blue"
         android:src="@drawable/index_line" />
+    
+    <ImageButton
+        android:id="@+id/index_camera"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:scaleType="fitCenter"
+        android:layout_above="@+id/image_line"
+        android:layout_centerHorizontal="true"
+        android:background="@color/blue"
+        android:src="@drawable/index_camera" />
     
      <ImageButton
         android:id="@+id/index_search"
@@ -50,19 +48,19 @@
      
      <ImageButton
         android:id="@+id/index_phone"
-        android:layout_width="81dp"
-        android:layout_height="81dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/index_search"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:background="@color/blue"
         android:src="@drawable/index_phone" />
 
      <ImageButton
          android:id="@+id/index_gralloc"
-         android:layout_width="81dp"
-         android:layout_height="81dp"
+         android:layout_width="80dp"
+         android:layout_height="80dp"
          android:layout_alignTop="@+id/index_phone"
          android:layout_toLeftOf="@+id/image_title"
          android:background="@color/blue"
@@ -71,8 +69,8 @@
 
      <ImageButton
          android:id="@+id/index_people"
-         android:layout_width="81dp"
-         android:layout_height="81dp"
+         android:layout_width="80dp"
+         android:layout_height="80dp"
          android:layout_alignTop="@+id/index_phone"
          android:layout_toRightOf="@+id/image_title"
          android:background="@color/blue"
