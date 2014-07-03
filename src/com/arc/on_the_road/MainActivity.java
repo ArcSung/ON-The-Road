@@ -17,12 +17,19 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore.Images;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -48,6 +55,13 @@ public class MainActivity extends Activity {
 	Double longitude;
 	Double latitude;
 	
+	String people_NAME;
+	String people_EMAIL;
+	String people_PHONE;
+	String people_ADDRESS;
+	
+	SharedPreferences prefs;
+	
 	private static final int ACTIVITY_SELECT_CAMERA = 0;
 	private static final int ACTIVITY_SELECT_Search = 1;
 	private static final int ACTIVITY_SELECT_Phone = 2;
@@ -65,6 +79,7 @@ public class MainActivity extends Activity {
 	    Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 	    
 	    //init_index_preview();	
+	    
 	    init_index_ui();
 	}	
 	
@@ -128,11 +143,46 @@ public class MainActivity extends Activity {
 		            	Log.i("On the road index", "people");
 		            	Intent intent_people = new Intent();
 		    			intent_people.setClass(MainActivity.this,PeopleActivity.class);
-		    			startActivityForResult(intent_people, ACTIVITY_SELECT_Phone);
+		    			startActivityForResult(intent_people, ACTIVITY_SELECT_People);
 		            break;
 		        }
 		    } 
 	};
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ACTIVITY_SELECT_CAMERA ) 
+		{
+
+			try {
+
+				
+				
+			} catch (Exception e) {}
+		}
+		else if (requestCode == ACTIVITY_SELECT_Search ) 
+		{
+
+			try {
+			} catch (Exception e) {}			
+		}
+		else if (requestCode == ACTIVITY_SELECT_Grolloc ) 
+		{
+
+			try {
+
+			} catch (Exception e) {}			
+		}
+		else if (requestCode == ACTIVITY_SELECT_People)
+		{
+			  Intent intent = getIntent(); 
+			  people_NAME = intent.getStringExtra("NAME");
+			  people_EMAIL = intent.getStringExtra("EMAIL");
+			  people_PHONE = intent.getStringExtra("PHONE");
+			  people_ADDRESS = intent.getStringExtra("ADDRESS");
+			  Log.i("On the road index", "getIntent NAME: "+people_NAME+" EMAIL: "+people_EMAIL+" PHONE: "+people_PHONE+" ADDRESS"+people_ADDRESS);
+		}	
+	}
 	
 	public void Get_Coordinates()
 	{       

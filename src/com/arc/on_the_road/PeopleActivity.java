@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 
-
 import android.R.string;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -54,11 +53,13 @@ public class PeopleActivity extends Activity {
 	ImageView pepole_info; 
 	EditText  pepole_edittext;
 	Button    pepole_button;
-
-	String NAME;
-	String EMAIL;
-	String PHONE;
-	String ADDRESS;
+	
+    String NAME;
+    String EMAIL;
+    String PHONE;
+    String ADDRESS;
+    
+    SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -71,11 +72,10 @@ public class PeopleActivity extends Activity {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	    Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
 	    
-	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	    NAME = prefs.getString("NAME", "小宋");
-	    EMAIL = prefs.getString("EMAIL", "ArcLaviz@gmail.com");
-	    PHONE = prefs.getString("PHONE", "0987654321");
-	    ADDRESS = prefs.getString("ADDRESS", "台灣台南");
+	    
+	    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    
+	    init_people_data();
 	    
 	    pepole_info = (ImageView) findViewById(R.id.people_inof);
 	    pepole_edittext = (EditText) findViewById(R.id.edittext);
@@ -90,7 +90,7 @@ public class PeopleActivity extends Activity {
 				{
 				  if(select_flag == ACTIVITY_SELECT_name)
 				  {
-					  NAME = pepole_edittext.toString();
+					  NAME = pepole_edittext.getText().toString();
 					  pepole_edittext.setText(EMAIL);
 					  select_flag = ACTIVITY_SELECT_email;
 					  pepole_info.setImageResource(R.drawable.people_email);
@@ -98,14 +98,14 @@ public class PeopleActivity extends Activity {
 				  }
 				  else if (select_flag == ACTIVITY_SELECT_email)
 				  {
-					  EMAIL = pepole_edittext.toString();
+					  EMAIL = pepole_edittext.getText().toString();
 					  pepole_edittext.setText(PHONE);
 					  select_flag = ACTIVITY_SELECT_Phone;
 					  pepole_info.setImageResource(R.drawable.people_callphone);
 				  }
 				  else if (select_flag == ACTIVITY_SELECT_Phone)
 				  {
-					  PHONE = pepole_edittext.toString();
+					  PHONE = pepole_edittext.getText().toString();
 					  pepole_edittext.setText(ADDRESS);
 					  select_flag = ACTIVITY_SELECT_address;
 					  pepole_info.setImageResource(R.drawable.people_address);
@@ -113,26 +113,35 @@ public class PeopleActivity extends Activity {
 				  }
 				  else if (select_flag == ACTIVITY_SELECT_address)
 				  {
-					  ADDRESS = pepole_edittext.toString();
-					  finishactivity();
+					  ADDRESS = pepole_edittext.getText().toString();
+		
+					  SharedPreferences.Editor mEditor = prefs.edit();  
+			          
+				        mEditor.putString("NAME", NAME);
+				        mEditor.putString("EMAIL", EMAIL);
+				        mEditor.putString("PHONE", PHONE);
+				        mEditor.putString("ADDRESS", ADDRESS);
+				        mEditor.commit();  
+					  
+					  Intent intent_people = new Intent();
+		    		  intent_people.setClass(PeopleActivity.this,MainActivity.class);
+		    		  startActivity(intent_people);
+		    			finish();
 				  }
 				}
 		});   
 	    
 	}
 	
-	void finishactivity()
+	private void init_people_data()
 	{
-		PreferenceManager.getDefaultSharedPreferences(this)
-		.edit()
-			.putString("NAME", NAME)
-			.putString("EMAIL", EMAIL)
-			.putString("PHONE", PHONE)
-			.putString("ADDRESS", ADDRESS);
-
-		this.finish();
+	    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    NAME = prefs.getString("NAME", "");
+	    EMAIL = prefs.getString("EMAIL", "");
+	    PHONE = prefs.getString("PHONE", "");
+	    ADDRESS = prefs.getString("ADDRESS", "");
+		Log.i("On the road index", "getString NAME: "+NAME+" EMAIL: "+EMAIL+" PHONE: "+PHONE+" ADDRESS"+ADDRESS);
+		
 	}
-	
-
 
 }
