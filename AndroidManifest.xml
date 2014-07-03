@@ -32,6 +32,11 @@
             android:name="com.arc.on_the_road.PeopleActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <activity
+            android:name="com.arc.on_the_road.CameraPreviewActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application> 
         
 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

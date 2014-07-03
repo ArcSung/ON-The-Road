@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 	
 	private void init_index_preview()
 	{
-		setContentView(R.layout.preview_layout);
+		setContentView(R.layout.camera_preview_layout);
 		ImageView_preview = (ImageView)findViewById(R.id.index_preview);
 		ImageView_preview.setOnClickListener(ImageButtonlistener);
 		
@@ -126,6 +126,9 @@ public class MainActivity extends Activity {
 	            	break;
 		            case R.id.index_camera:
 		            	Log.i("On the road index", "camera");
+		            	Intent intent_camera = new Intent();
+		            	intent_camera.setClass(MainActivity.this,CameraPreviewActivity.class);
+		    			startActivityForResult(intent_camera, ACTIVITY_SELECT_CAMERA);
 		            break;
 		            case R.id.index_search:
 		            	Log.i("On the road index", "search");
