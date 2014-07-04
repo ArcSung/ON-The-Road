@@ -69,11 +69,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	int pickedH, pickedW;
 
 	List<Camera.Size> cameraSize;
-	public Bitmap onTouchOK(){
-		return newb;
-	}
 	
-	public boolean onTouchEvent(MotionEvent event){
+	public void onButtonCheck(){
 		 //this.surfaceDestroyed(mHolder);	
   	     mycamera.stopPreview();
   	     Toast toast = Toast.makeText(getContext(),"儲存照片",Toast.LENGTH_SHORT);
@@ -143,8 +140,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	    	 correct = 1;	 
 	    // }	 
 	    // else correct=0;
-		return false;
-   	
    }
   
 	public CameraView(Context context, CameraViewToDraw _vtd, Context _context, Double longit, Double latitude, int monitor_sizeX, int monitor_sizeY) {

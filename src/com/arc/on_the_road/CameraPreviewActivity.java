@@ -8,11 +8,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -21,6 +25,12 @@ public class CameraPreviewActivity extends Activity {
     int correct=0;
     CameraView cameraView;
 	Bitmap newb;
+	
+	Boolean Camera_button_check = false;
+	
+	ImageButton ImageButton_TakePicture;
+	ImageButton ImageButton_FaceBook;
+	ImageButton ImageButton_UpDate;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +54,18 @@ public class CameraPreviewActivity extends Activity {
         setRequestedOrientation(1);   //Upright    
         //取得畫圖的View
         CameraViewToDraw dtw = (CameraViewToDraw) findViewById(R.id.vtd);
-        dtw.setSize(display.getHeight(), display.getWidth()); //#2
+        //dtw.setSize(metrics.widthPixels, metrics.heightPixels); //#2
+        
+        ImageButton_TakePicture = (ImageButton)findViewById(R.id.camera_takepicture);
+        ImageButton_FaceBook    = (ImageButton)findViewById(R.id.camera_facebook);
+        ImageButton_UpDate      = (ImageButton)findViewById(R.id.camera_update);
+        
+        ImageButton_TakePicture.setOnClickListener(ImageButtonlistener);
+        ImageButton_FaceBook.setOnClickListener(ImageButtonlistener);
+        ImageButton_UpDate.setOnClickListener(ImageButtonlistener);
+        
+        ImageButton_FaceBook.setVisibility(View.GONE);
+        ImageButton_UpDate.setVisibility(View.GONE);
  
         //產生攝影機預覽surfaceView
         cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude, metrics.widthPixels, metrics.heightPixels);
@@ -53,14 +74,35 @@ public class CameraPreviewActivity extends Activity {
                
     }//end onCreate(Bundle savedInstanceState)
     
+	private OnClickListener ImageButtonlistener =new OnClickListener(){
+		 
+		@Override
+		    public void onClick(View v) {
+		// TODO Auto-generated method stub
+		        switch(v.getId()){
+	            	case R.id.camera_takepicture:
+	            		if(Camera_button_check == false)
+	            		{	
+	            			cameraView.onButtonCheck();
+	                    	ImageButton_FaceBook.setVisibility(View.VISIBLE);
+	                    	ImageButton_UpDate.setVisibility(View.VISIBLE);
+	                    	//Dialog(newb);
+	                    	//MyCameraPreview.this.finish();
+	                    	Camera_button_check = true;
+	            		}	
+	                    else
+	                    {
+	                        ImageButton_FaceBook.setVisibility(View.GONE);
+	                        ImageButton_UpDate.setVisibility(View.GONE);
+	                        Camera_button_check = false;
+	                        //CameraPreviewActivity.this.finish(); 
+	                    }	
+		            break;
+		        }
+		    } 
+	};
     
-	public boolean onTouchEvent(MotionEvent event)
-    {
-		newb=cameraView.onTouchOK();
-		Dialog(newb);
-		//MyCameraPreview.this.finish();  
-		return false;   	
-    }//end onTouchEvent(MotionEvent event)
+
 	
 	private void Dialog(Bitmap photo)
 	{
