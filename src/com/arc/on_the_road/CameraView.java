@@ -28,6 +28,7 @@ import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -146,7 +147,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
    	
    }
   
-	public CameraView(Context context, CameraViewToDraw _vtd, Context _context, Double longit, Double latitude) {
+	public CameraView(Context context, CameraViewToDraw _vtd, Context _context, Double longit, Double latitude, int monitor_sizeX, int monitor_sizeY) {
 		super(context);
 		mHolder = getHolder(); 
 		mHolder.addCallback(this); 
@@ -159,6 +160,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		Log.i("ARC",url);
     	//new HttpAsyncTask().execute(url);
     	vtd.setAddress(cityid, villageid, streetid);
+		vtd.setSize(monitor_sizeY, monitor_sizeX);
+		vtd.setPaint();
 	}
 
 
@@ -184,7 +187,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		try {
 			mycamera.setPreviewDisplay(holder); 
 			mycamera.setDisplayOrientation(90);
-			vtd.setSize(pickedH, pickedW);
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}

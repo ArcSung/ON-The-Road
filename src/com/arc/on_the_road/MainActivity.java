@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 	
 	private void init_index_preview()
 	{
-		setContentView(R.layout.camera_preview_layout);
+		setContentView(R.layout.index_preview_layout);
 		ImageView_preview = (ImageView)findViewById(R.id.index_preview);
 		ImageView_preview.setOnClickListener(ImageButtonlistener);
 		

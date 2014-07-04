@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -28,6 +29,10 @@ public class CameraPreviewActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
+        
+        // get monitor size
+		DisplayMetrics metrics = new DisplayMetrics();  
+	    getWindowManager().getDefaultDisplay().getMetrics(metrics);
  
         Intent intent = getIntent(); 
         Double longitude = intent.getDoubleExtra("longitude", 0);
@@ -42,7 +47,7 @@ public class CameraPreviewActivity extends Activity {
         dtw.setSize(display.getHeight(), display.getWidth()); //#2
  
         //產生攝影機預覽surfaceView
-        cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude);
+        cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude, metrics.widthPixels, metrics.heightPixels);
         //把預覽的surfaceView加到名為preview的FrameLayout
         ((FrameLayout) findViewById(R.id.preview)).addView(cameraView);
                

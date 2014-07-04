@@ -16,5 +16,15 @@
 		   android:id="@+id/vtd" 
 		   android:layout_height="fill_parent" 
 		   android:layout_width="fill_parent"></com.arc.on_the_road.CameraViewToDraw>
+
+		<ImageButton
+		    android:id="@+id/camera_takepicture"
+		    android:layout_width="fill_parent"
+		    android:layout_height="60dp"
+		    android:background="#88606060"
+		    android:scaleType="fitCenter"
+		    android:src="@drawable/index_camera" />
+
 	</FrameLayout>
+
 </LinearLayout>

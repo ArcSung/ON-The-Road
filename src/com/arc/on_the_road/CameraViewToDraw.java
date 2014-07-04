@@ -16,7 +16,7 @@ import android.view.View;
 
 public class CameraViewToDraw extends View{
 	
-	private int imgHeight, imgWidth;
+	private int imgHeight = 0, imgWidth = 0;
 	private byte[] image = null;
 	private boolean isCameraSet = false;
 	int rgb[];
@@ -26,7 +26,7 @@ public class CameraViewToDraw extends View{
 	String streetid = "";
 
 	
-	Paint whitePaint = new Paint();
+	Paint TimePaint = new Paint();
 	Paint whitePaint2 = new Paint();
 	Paint blackPaint = new Paint();
 	Paint greenPaint = new Paint();
@@ -41,23 +41,17 @@ public class CameraViewToDraw extends View{
 		setPaint();
 	}
 	
-	private void setPaint(){
-		whitePaint.setColor(Color.WHITE);
-		whitePaint.setStyle(Paint.Style.FILL);
-		whitePaint.setStrokeWidth(3);
-		whitePaint.setTextSize(80);
-		whitePaint.setTypeface(Typeface.MONOSPACE);
+	public void setPaint(){
+		TimePaint.setColor(Color.WHITE);
+		TimePaint.setStyle(Paint.Style.FILL);
+		TimePaint.setStrokeWidth(3);
+		TimePaint.setTextSize((int)(imgWidth/15));
+		TimePaint.setTypeface(Typeface.MONOSPACE);
 		whitePaint2.setColor(Color.WHITE);
 		whitePaint2.setStyle(Paint.Style.FILL);
 		whitePaint2.setStrokeWidth(3);
 		whitePaint2.setTextSize(120);
 		whitePaint2.setTypeface(Typeface.MONOSPACE);
-		greenPaint.setColor(Color.GREEN);
-		greenPaint.setStyle(Paint.Style.STROKE);
-		greenPaint.setStrokeWidth(2);
-		blackPaint.setColor(Color.BLACK);
-		blackPaint.setStyle(Paint.Style.STROKE);
-		blackPaint.setStrokeWidth(10);
 	}
 
 	public void setSize(int h, int w){
@@ -79,20 +73,6 @@ public class CameraViewToDraw extends View{
 		image = Img;
 		
 	}
-	public void FaceRect(int x1,int y1,int x2,int y2,float z1){
-		nx1=x1;
-		nx2=x2;
-		ny1=y1;
-		ny2=y2;
-
-		
-	}
-	
-	public void FacePoint(int x1,int y1){
-		nx1=x1;
-		ny1=y1;		
-	}
-	
 
 	//這是一個簡單的把YUV421轉成黑白的運算函式, 如要更進一步轉成RGB256, 請參考下面的方法
 	private boolean getBoolean(int x, int y){
@@ -137,15 +117,16 @@ public class CameraViewToDraw extends View{
 	@Override
 	protected void onDraw(Canvas canvas){
 		
-		
+		float locationX = imgWidth/15; 
+		float locationY = (imgHeight/16)*14;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     	Date curDate = new Date(System.currentTimeMillis());
     	String date = formatter.format(curDate);
-    	canvas.drawText(date, 50, 1800, whitePaint);
+    	canvas.drawText(date, locationX, locationY, TimePaint);
     	
     	canvas.drawText(cityid, 70, 1600, whitePaint2);
-    	canvas.drawText(villageid, 400, 1600, whitePaint);
-    	canvas.drawText(streetid, 70, 1700, whitePaint);
+    	canvas.drawText(villageid, 400, 1600, TimePaint);
+    	canvas.drawText(streetid, 70, 1700, TimePaint);
     	
 	}
 }
