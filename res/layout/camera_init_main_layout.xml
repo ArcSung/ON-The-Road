@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     >
    <RelativeLayout 
-       android:id="@+id/FrameLayout01" 
+       android:id="@+id/RelateLayout01" 
    	   android:layout_height="fill_parent" 
    	   android:layout_width="fill_parent">
 		<FrameLayout 
@@ -17,32 +17,38 @@
 		   android:layout_height="fill_parent" 
 		   android:layout_width="fill_parent"></com.arc.on_the_road.CameraViewToDraw>
 
-		<ImageButton
-		    android:id="@+id/camera_takepicture"
-		    android:layout_width="fill_parent"
-		    android:layout_height="60dp"
-		    android:background="#88606060"
-		    android:scaleType="fitCenter"
-		    android:layout_alignParentBottom="true"
-		    android:src="@drawable/index_camera" />
+		   <RelativeLayout 
+       			android:id="@+id/RelateLayout02" 
+   	   			android:layout_height="65dp" 
+   	  		    android:layout_width="fill_parent"
+   	  		    android:background="#88606060"
+   	  		    android:layout_alignParentBottom="true">
+		   <ImageButton
+		        android:id="@+id/camera_takepicture"
+		        android:layout_width="65dp"
+		        android:layout_height="65dp"
+		    	android:layout_alignParentBottom="true"
+		    	android:background="#00606060"
+		    	android:layout_centerHorizontal="true"
+		    	android:src="@drawable/camera_takepicture" />
 		
-		<ImageButton
-		    android:id="@+id/camera_facebook"
-		    android:layout_width="fill_parent"
-		    android:layout_height="60dp"
-		    android:background="#88606060"
-		    android:scaleType="fitCenter"
-		    android:layout_above="@+id/camera_takepicture"
-		    android:src="@drawable/index_camera" />
+			<ImageButton
+		    	android:id="@+id/camera_cancel"
+		    	android:layout_width="65dp"
+		    	android:layout_height="65dp"
+		    	android:layout_alignParentBottom="true"
+		    	android:layout_alignParentLeft="true"
+		    	android:background="#00606060"
+		    	android:src="@drawable/camera_cancel" />
 		
-		<ImageButton
-		    android:id="@+id/camera_update"
-		    android:layout_width="fill_parent"
-		    android:layout_height="60dp"
-		    android:background="#88606060"
-		    android:scaleType="fitCenter"
-		    android:layout_above="@+id/camera_facebook"
-		    android:src="@drawable/index_camera" />
+			<ImageButton
+		    	android:id="@+id/camera_check_grolloc"
+		    	android:layout_width="65dp"
+		    	android:layout_height="65dp"
+		    	android:layout_alignParentBottom="true"
+		    	android:layout_alignParentRight="true"
+		    	android:background="#00606060" />
+		</RelativeLayout>
 
 	</RelativeLayout>
 

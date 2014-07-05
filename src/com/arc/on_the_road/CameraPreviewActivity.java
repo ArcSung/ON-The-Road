@@ -23,14 +23,17 @@ import android.widget.LinearLayout;
 public class CameraPreviewActivity extends Activity {
     /** Called when the activity is first created. */
     int correct=0;
+    final int Camera_start_preview = 0;
+    final int Camera_stop_preview  = 1;
+    final int Camera_save_picture  = 2;
     CameraView cameraView;
 	Bitmap newb;
 	
 	Boolean Camera_button_check = false;
 	
 	ImageButton ImageButton_TakePicture;
-	ImageButton ImageButton_FaceBook;
-	ImageButton ImageButton_UpDate;
+	ImageButton ImageButton_Cancel;
+	ImageButton ImageButton_Check_Grolloc;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +60,15 @@ public class CameraPreviewActivity extends Activity {
         //dtw.setSize(metrics.widthPixels, metrics.heightPixels); //#2
         
         ImageButton_TakePicture = (ImageButton)findViewById(R.id.camera_takepicture);
-        ImageButton_FaceBook    = (ImageButton)findViewById(R.id.camera_facebook);
-        ImageButton_UpDate      = (ImageButton)findViewById(R.id.camera_update);
+        ImageButton_Cancel    = (ImageButton)findViewById(R.id.camera_cancel);
+        ImageButton_Check_Grolloc      = (ImageButton)findViewById(R.id.camera_check_grolloc);
         
         ImageButton_TakePicture.setOnClickListener(ImageButtonlistener);
-        ImageButton_FaceBook.setOnClickListener(ImageButtonlistener);
-        ImageButton_UpDate.setOnClickListener(ImageButtonlistener);
+        ImageButton_Cancel.setOnClickListener(ImageButtonlistener);
+        ImageButton_Check_Grolloc.setOnClickListener(ImageButtonlistener);
         
-        ImageButton_FaceBook.setVisibility(View.GONE);
-        ImageButton_UpDate.setVisibility(View.GONE);
+        ImageButton_Cancel.setVisibility(View.GONE);
+        ImageButton_Check_Grolloc.setVisibility(View.GONE);
  
         //產生攝影機預覽surfaceView
         cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude, metrics.widthPixels, metrics.heightPixels);
@@ -80,24 +83,39 @@ public class CameraPreviewActivity extends Activity {
 		    public void onClick(View v) {
 		// TODO Auto-generated method stub
 		        switch(v.getId()){
-	            	case R.id.camera_takepicture:
-	            		if(Camera_button_check == false)
-	            		{	
-	            			cameraView.onButtonCheck();
-	                    	ImageButton_FaceBook.setVisibility(View.VISIBLE);
-	                    	ImageButton_UpDate.setVisibility(View.VISIBLE);
-	                    	//Dialog(newb);
-	                    	//MyCameraPreview.this.finish();
-	                    	Camera_button_check = true;
-	            		}	
-	                    else
-	                    {
-	                        ImageButton_FaceBook.setVisibility(View.GONE);
-	                        ImageButton_UpDate.setVisibility(View.GONE);
-	                        Camera_button_check = false;
-	                        //CameraPreviewActivity.this.finish(); 
-	                    }	
+	            	case R.id.camera_takepicture:	
+	            		cameraView.onButtonCheck(Camera_stop_preview);
+	            		ImageButton_Cancel.setVisibility(View.VISIBLE);
+	            		ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
+	            		ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_check);
+	                    ImageButton_TakePicture.setVisibility(View.GONE);	
+	                    Camera_button_check = true;
 		            break;
+		            
+	            	case R.id.camera_cancel:
+	            		cameraView.onButtonCheck(Camera_start_preview);
+	            		ImageButton_Cancel.setVisibility(View.GONE);
+	            		ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
+	            		ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
+	                    ImageButton_TakePicture.setVisibility(View.VISIBLE);
+	                    Camera_button_check = false;
+		            break;
+	            	case R.id.camera_check_grolloc:
+	            		if(Camera_button_check = true) //stop preview state
+	            		{	
+	            			cameraView.onButtonCheck(Camera_save_picture);
+	            			cameraView.onButtonCheck(Camera_start_preview);
+	            			ImageButton_Cancel.setVisibility(View.GONE);
+	            			ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
+	            			ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
+	            			ImageButton_TakePicture.setVisibility(View.VISIBLE);
+	            			Camera_button_check = false;
+	            		}
+	            		else     //start preview state
+	            		{
+	            			
+	            		}	
+	               break;
 		        }
 		    } 
 	};

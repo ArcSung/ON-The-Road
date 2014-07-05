@@ -42,6 +42,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	public TextView fpsText;
 	public CameraViewToDraw vtd;
 	
+    final int Camera_start_preview = 0;
+    final int Camera_stop_preview  = 1;
+    final int Camera_save_picture  = 2;
+	
 	int rgb[];
 	int locat[];
 	int FaceRct[];
@@ -70,76 +74,80 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 
 	List<Camera.Size> cameraSize;
 	
-	public void onButtonCheck(){
-		 //this.surfaceDestroyed(mHolder);	
-  	     mycamera.stopPreview();
-  	     Toast toast = Toast.makeText(getContext(),"儲存照片",Toast.LENGTH_SHORT);
-        toast.show();
-        
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-    	Date curDate = new Date(System.currentTimeMillis());
-    	String date = formatter.format(curDate);
+	public void onButtonCheck(int flag){
+		 //this.surfaceDestroyed(mHolder);
+		if(flag == Camera_stop_preview)
+		{	
+			mycamera.stopPreview();
+		}	 
+		else if (flag == Camera_start_preview)
+		{	
+			mycamera.startPreview();
+		}
+		else if (flag == Camera_save_picture)
+		{
+		    Toast toast = Toast.makeText(getContext(),"儲存照片",Toast.LENGTH_SHORT);
+		    toast.show();
+		        
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		    Date curDate = new Date(System.currentTimeMillis());
+		    String date = formatter.format(curDate);
 
-    	//JSONArray obj = getJson("http://linarnan.co");
-    	/*try {
-    		 
-    		 
-			for(int i = 0; i< obj.length();i++){
-				String id = String.valueOf(i);
-				JSONObject data = obj.getJSONObject(i);
-				Log.d("show",data.getString("Name"));
-			}
- 
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}*/
-    	
-    	whitePaint.setColor(Color.WHITE);
-		whitePaint.setStyle(Paint.Style.FILL);
-		whitePaint.setStrokeWidth(3);
-		whitePaint.setTextSize(80);
-		whitePaint.setTypeface(Typeface.MONOSPACE);
-		
-    	whitePaint2.setColor(Color.WHITE);
-		whitePaint2.setStyle(Paint.Style.FILL);
-		whitePaint2.setStrokeWidth(3);
-		whitePaint2.setTextSize(120);
-		whitePaint2.setTypeface(Typeface.MONOSPACE);
-    	
-    	//create the new blank bitmap
-    	newb = Bitmap.createBitmap( 1080, 1920, Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
-    	Canvas cv = new Canvas( newb );
-    	//draw src into
-    	cv.drawBitmap( image2, 0, 0, null );//在 0，0座標開始畫入src
-    	cv.drawText(cityid, 70, 1600, whitePaint2);
-    	cv.drawText(villageid, 400, 1600, whitePaint);
-    	cv.drawText(streetid, 70, 1700, whitePaint);
-    	//draw watermark into
-    	cv.drawText(date, 50, 1800, whitePaint);
-    	//save all clip
-    	cv.save( Canvas.ALL_SAVE_FLAG );//保存
-    	
-    	cv.restore();//存儲
+		    	//JSONArray obj = getJson("http://linarnan.co");
+		    	/*try {
+		    		 
+		    		 
+					for(int i = 0; i< obj.length();i++){
+						String id = String.valueOf(i);
+						JSONObject data = obj.getJSONObject(i);
+						Log.d("show",data.getString("Name"));
+					}
+		 
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}*/
+		    	
+		    whitePaint.setColor(Color.WHITE);
+			whitePaint.setStyle(Paint.Style.FILL);
+			whitePaint.setStrokeWidth(3);
+			whitePaint.setTextSize(80);
+			whitePaint.setTypeface(Typeface.MONOSPACE);
+				
+		    whitePaint2.setColor(Color.WHITE);
+			whitePaint2.setStyle(Paint.Style.FILL);
+			whitePaint2.setStrokeWidth(3);
+			whitePaint2.setTextSize(120);
+			whitePaint2.setTypeface(Typeface.MONOSPACE);
+		    	
+		    //create the new blank bitmap
+		    newb = Bitmap.createBitmap( 1080, 1920, Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
+		    Canvas cv = new Canvas( newb );
+		    //draw src into
+		    cv.drawBitmap( image2, 0, 0, null );//在 0，0座標開始畫入src
+		    cv.drawText(cityid, 70, 1600, whitePaint2);
+		    cv.drawText(villageid, 400, 1600, whitePaint);
+		    cv.drawText(streetid, 70, 1700, whitePaint);
+		    //draw watermark into
+		    cv.drawText(date, 50, 1800, whitePaint);
+		    //save all clip
+		    cv.save( Canvas.ALL_SAVE_FLAG );//保存
+		    	
+		    cv.restore();//存儲
 
-
-		try {
-			FileOutputStream fos = new FileOutputStream( "/sdcard/DCIM/Camera/Tainna_"+date+".jpg" );
-			    if ( fos != null )
-			    {
-			    	newb.compress(Bitmap.CompressFormat.JPEG, 100, fos );
-			    fos.close();
-			    }
-			    // setWallpaper( bitmap );
-			    } 
-			    catch( IOException e )
-			    {
-			    Log.e("testSaveView", "Exception: " + e.toString() );
-			    }
-	    	 Log.i("tag","yes");
- 
-	    	 correct = 1;	 
-	    // }	 
-	    // else correct=0;
+			try {
+				FileOutputStream fos = new FileOutputStream( "/sdcard/DCIM/Camera/Tainna_"+date+".jpg" );
+					if ( fos != null )
+					{
+						newb.compress(Bitmap.CompressFormat.JPEG, 100, fos );
+						fos.close();
+					}
+					    // setWallpaper( bitmap );
+				} 
+				catch( IOException e )
+				{
+				    Log.e("testSaveView", "Exception: " + e.toString() );
+				}
+		}
    }
   
 	public CameraView(Context context, CameraViewToDraw _vtd, Context _context, Double longit, Double latitude, int monitor_sizeX, int monitor_sizeY) {
