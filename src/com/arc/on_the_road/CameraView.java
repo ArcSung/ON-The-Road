@@ -158,10 +158,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	    longitude = longit;
 	    latitude = latitude;
 		this.vtd = _vtd;
-    	//String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true";
-		String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longit;
+    	String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true&hl=zh-TW";
+		//String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longit;
+		//String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=23.0167143,120.2107831&sensor=true&hl=zh-CN";
 		Log.i("ARC",url);
-    	//new HttpAsyncTask().execute(url);
+    	new HttpAsyncTask().execute(url);
     	vtd.setAddress(cityid, villageid, streetid);
 		vtd.setSize(monitor_sizeY, monitor_sizeX);
 		vtd.setPaint();
@@ -244,6 +245,113 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		});
         
 		mycamera.startPreview();
+	}
+	
+	public class HttpAsyncTask extends AsyncTask<String, Void, String> {
+		
+		JSONArray jsonArrayMain = null;
+	    
+	 @Override
+	protected String doInBackground(String... urls) 
+	{
+	   	jsonArrayMain = GET(urls[0]); 
+	    return "OK";
+	}
+	 
+	 // onPostExecute displays the results of the AsyncTask.
+	 @Override
+	protected void onPostExecute(String result) 
+	 {
+		 
+	 }
+
+	private String convertInputStreamToString(InputStream inputStream) throws IOException{
+	    BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+	    String line = "";
+	    String result = "";
+	    while((line = bufferedReader.readLine()) != null)
+	        result += line;
+
+	    inputStream.close();
+	    return result;
+
+	}
+
+	public JSONArray  GET(String url)
+	{
+	    InputStream inputStream = null;
+	    String result = "";
+	    JSONArray jsonArray = null;
+	    try {
+
+	        // create HttpClient
+	        HttpClient httpclient = new DefaultHttpClient();
+
+	        // make GET request to the given URL
+	        HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+
+	        // receive response as inputStream
+	        inputStream = httpResponse.getEntity().getContent();
+
+	        // convert inputstream to string
+	        if(inputStream != null)
+	            result = convertInputStreamToString(inputStream);
+	        else
+	            result = "Did not work!";
+	    } catch (Exception e) {
+	        Log.d("InputStream", e.getLocalizedMessage());
+	    }
+	    
+	 // 讀取回應
+	 		try {
+	 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf8"),9999999);
+	 			//99999為傳流大小，若資料很大，可自行調整
+	 			StringBuilder sb = new StringBuilder();
+	 			String line = null;
+	 			while ((line = reader.readLine()) != null) {
+	 				//逐行取得資料
+	 				sb.append(line + "\n");
+	 			}
+	 			inputStream.close();
+	 			result = sb.toString();
+	 		} catch(Exception e) {
+	 			e.printStackTrace();
+	 		}
+	 
+	 	    try {
+	 	    		JSONObject jsnJsonObject = new JSONObject(result);
+	 	    		JSONArray contacts = jsnJsonObject.getJSONArray("results");
+	 	    		Log.i("Parsed data is",":"+contacts.length());
+	 	    		
+                    JSONObject js = contacts.getJSONObject(0);
+                    JSONArray jaa = (JSONArray) js.get("address_components");
+                    
+                    JSONObject jss = jaa.getJSONObject(4);
+                    cityid = jss.getString("long_name");
+                    
+                    jss = jaa.getJSONObject(3);
+                    villageid = jss.getString("long_name");
+                    
+                    jss = jaa.getJSONObject(1);
+                    streetid = jss.getString("long_name");
+
+                    Log.d(" Parsed data is","cityid="+cityid+" villageid"+villageid+" streetid"+streetid);
+	 	        
+
+	 	    } catch (JSONException e) {
+	        	Log.i("ARC","3");
+	 	        e.printStackTrace();
+	 	    }
+	 		//轉換文字為JSONArray
+	 		/*try {
+	 			JSONObject jsnJsonObject = new JSONObject(result);
+	 		} catch(JSONException e) {
+	 			Log.i("ARC","2C" + e.getMessage());
+	 			e.printStackTrace();
+	 		}*/
+
+	    return jsonArray;
+	    }
 	}
 
 	public void onAutoFocus(boolean success, Camera camera) {

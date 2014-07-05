@@ -27,9 +27,7 @@ public class CameraViewToDraw extends View{
 
 	
 	Paint TimePaint = new Paint();
-	Paint whitePaint2 = new Paint();
-	Paint blackPaint = new Paint();
-	Paint greenPaint = new Paint();
+	Paint CityPaint = new Paint();
 
 	public CameraViewToDraw(Context context) {
 		super(context);
@@ -45,13 +43,13 @@ public class CameraViewToDraw extends View{
 		TimePaint.setColor(Color.WHITE);
 		TimePaint.setStyle(Paint.Style.FILL);
 		TimePaint.setStrokeWidth(3);
-		TimePaint.setTextSize((int)(imgWidth/15));
+		TimePaint.setTextSize((int)(imgWidth/18));
 		TimePaint.setTypeface(Typeface.MONOSPACE);
-		whitePaint2.setColor(Color.WHITE);
-		whitePaint2.setStyle(Paint.Style.FILL);
-		whitePaint2.setStrokeWidth(3);
-		whitePaint2.setTextSize(120);
-		whitePaint2.setTypeface(Typeface.MONOSPACE);
+		CityPaint.setColor(Color.WHITE);
+		CityPaint.setStyle(Paint.Style.FILL);
+		CityPaint.setStrokeWidth(3);
+		CityPaint.setTextSize((int)(imgWidth/14));
+		CityPaint.setTypeface(Typeface.MONOSPACE);
 	}
 
 	public void setSize(int h, int w){
@@ -124,9 +122,15 @@ public class CameraViewToDraw extends View{
     	String date = formatter.format(curDate);
     	canvas.drawText(date, locationX, locationY, TimePaint);
     	
-    	canvas.drawText(cityid, 70, 1600, whitePaint2);
-    	canvas.drawText(villageid, 400, 1600, TimePaint);
-    	canvas.drawText(streetid, 70, 1700, TimePaint);
+		locationX = imgWidth/15; 
+		locationY = (imgHeight/16)*12;
+    	canvas.drawText(cityid, locationX, locationY, CityPaint);
+		locationX = (imgWidth/15)*7; 
+		locationY = (imgHeight/16)*12;
+    	canvas.drawText(villageid, locationX, locationY, TimePaint);
+		locationX = (imgWidth/15); 
+		locationY = (imgHeight/16)*13;
+    	canvas.drawText(streetid, locationX, locationY, TimePaint);
     	
 	}
 }
