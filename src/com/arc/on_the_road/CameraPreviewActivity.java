@@ -1,5 +1,7 @@
 package com.arc.on_the_road;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,9 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -26,6 +30,7 @@ public class CameraPreviewActivity extends Activity {
     final int Camera_start_preview = 0;
     final int Camera_stop_preview  = 1;
     final int Camera_save_picture  = 2;
+    final int Camera_close_camera  = 3;
     CameraView cameraView;
 	Bitmap newb;
 	
@@ -67,8 +72,12 @@ public class CameraPreviewActivity extends Activity {
         ImageButton_Cancel.setOnClickListener(ImageButtonlistener);
         ImageButton_Check_Grolloc.setOnClickListener(ImageButtonlistener);
         
+        ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
+        ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
         ImageButton_Cancel.setVisibility(View.GONE);
-        ImageButton_Check_Grolloc.setVisibility(View.GONE);
+        //ImageButton_Check_Grolloc.setVisibility(View.GONE);
+        
+        createDirIfNotExists("/sdcard/ON_THE_ROAD/");
  
         //產生攝影機預覽surfaceView
         cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude, metrics.widthPixels, metrics.heightPixels);
@@ -76,6 +85,7 @@ public class CameraPreviewActivity extends Activity {
         ((FrameLayout) findViewById(R.id.preview)).addView(cameraView);
                
     }//end onCreate(Bundle savedInstanceState)
+    
     
 	private OnClickListener ImageButtonlistener =new OnClickListener(){
 		 
@@ -120,42 +130,28 @@ public class CameraPreviewActivity extends Activity {
 		    } 
 	};
     
-
 	
-	private void Dialog(Bitmap photo)
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		//init SQL
-    	    			
-		// Setting_Dialog UI set up
-		LinearLayout linear=new LinearLayout(this);
-		linear.setOrientation(1);
-				
+	 public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+	        if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+	        {   
+	        	cameraView.onButtonCheck(Camera_close_camera);//When retrun, stop camera first
+	        	CameraPreviewActivity.this.finish();
+	            return true;  
+	        }  
+	        return super.onKeyDown(keyCode, event);  
+	  }
 	
-		ImageView PhotoImage = new ImageView(this);			
-		PhotoImage.setImageBitmap(photo);
-		linear.addView(PhotoImage);
+	public static boolean createDirIfNotExists(String path) {
+	    boolean ret = true;
 
-
-	    builder.setView(linear); 
-		
-	    builder.setPositiveButton("上傳", new DialogInterface.OnClickListener() 
-		{
-	        public void onClick(DialogInterface dialog, int id) 
-	        {
-	        	CameraPreviewActivity.this.finish(); 
+	    File file = new File(Environment.getExternalStorageDirectory(), path);
+	    if (!file.exists()) {
+	        if (!file.mkdirs()) {
+	            Log.e("TravellerLog :: ", "Problem creating Image folder");
+	            ret = false;
 	        }
-	    });
-		
-	    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() 
-	    {
-	        public void onClick(DialogInterface dialog, int id) 
-	        {
-	        	CameraPreviewActivity.this.finish();  
-	        }
-	    });
-	    
-	    AlertDialog setting_dialog = builder.create();
-	    setting_dialog.show();
+	    }
+	    return ret;
 	}
 }
