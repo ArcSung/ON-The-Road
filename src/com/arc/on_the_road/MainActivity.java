@@ -81,6 +81,8 @@ public class MainActivity extends Activity {
 	    //init_index_preview();	
 	    
 	    init_index_ui();
+	    
+	    Get_Coordinates();
 	}	
 	
 	private void init_index_preview()
@@ -127,6 +129,8 @@ public class MainActivity extends Activity {
 		            case R.id.index_camera:
 		            	Log.i("On the road index", "camera");
 		            	Intent intent_camera = new Intent();
+		            	intent_camera.putExtra("longitude", longitude);
+		            	intent_camera.putExtra("latitude", latitude);
 		            	intent_camera.setClass(MainActivity.this,CameraPreviewActivity.class);
 		    			startActivityForResult(intent_camera, ACTIVITY_SELECT_CAMERA);
 		            break;
