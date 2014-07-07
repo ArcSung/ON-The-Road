@@ -26,8 +26,8 @@ public class CameraViewToDraw extends View{
 	String streetid = "";
 
 	
-	Paint TimePaint = new Paint();
-	Paint CityPaint = new Paint();
+	public Paint TimePaint = new Paint();
+	public Paint CityPaint = new Paint();
 
 	public CameraViewToDraw(Context context) {
 		super(context);

@@ -66,12 +66,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
     static String villageid = "";
     static String streetid = "";
     
-    Bitmap newb;
-
 	
 	SurfaceHolder mHolder;	
 	
 	int pickedH, pickedW;
+	int monitor_sizeW, monitor_sizeH;
 
 	List<Camera.Size> cameraSize;
 	
@@ -98,35 +97,36 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		    Date curDate = new Date(System.currentTimeMillis());
 		    String date = formatter.format(curDate);
 		    	
-		    whitePaint.setColor(Color.WHITE);
-			whitePaint.setStyle(Paint.Style.FILL);
-			whitePaint.setStrokeWidth(3);
-			whitePaint.setTextSize(80);
-			whitePaint.setTypeface(Typeface.MONOSPACE);
-				
-		    whitePaint2.setColor(Color.WHITE);
-			whitePaint2.setStyle(Paint.Style.FILL);
-			whitePaint2.setStrokeWidth(3);
-			whitePaint2.setTextSize(120);
-			whitePaint2.setTypeface(Typeface.MONOSPACE);
+		   
 		    	
 		    //create the new blank bitmap
-		    newb = Bitmap.createBitmap( pickedW, pickedH, Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
+		    Bitmap newb = Bitmap.createBitmap( image2.getWidth(), image2.getHeight(), Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
 		    Canvas cv = new Canvas( newb );
 		    //draw src into
+		    
 		    cv.drawBitmap( image2, 0, 0, null );//在 0，0座標開始畫入src
-		    cv.drawText(cityid, 70, 1600, whitePaint2);
-		    cv.drawText(villageid, 400, 1600, whitePaint);
-		    cv.drawText(streetid, 70, 1700, whitePaint);
-		    //draw watermark into
-		    cv.drawText(date, 50, 1800, whitePaint);
-		    //save all clip
+		    
+			float locationX = monitor_sizeW/15; 
+			float locationY = (monitor_sizeH/16)*14;
+
+	    	cv.drawText(date, locationX, locationY, vtd.TimePaint);
+	    	
+			locationX = monitor_sizeW/15; 
+			locationY = (monitor_sizeH/16)*12;
+	    	cv.drawText(cityid, locationX, locationY, vtd.CityPaint);
+			locationX = (monitor_sizeW/15)*7; 
+			locationY = (monitor_sizeH/16)*12;
+	    	cv.drawText(villageid, locationX, locationY, vtd.TimePaint);
+			locationX = (monitor_sizeW/15); 
+			locationY = (monitor_sizeH/16)*13;
+	    	cv.drawText(streetid, locationX, locationY, vtd.TimePaint);
+	    	
 		    cv.save( Canvas.ALL_SAVE_FLAG );//保存
 		    	
 		    cv.restore();//存儲
 
 			try {
-				FileOutputStream fos = new FileOutputStream( "/sdcard/DCIM/Camera/Tainna_"+date+".jpg" );
+				FileOutputStream fos = new FileOutputStream( "/sdcard/ON_THE_ROAD/Tainna_"+date+".jpg" );
 					if ( fos != null )
 					{
 						newb.compress(Bitmap.CompressFormat.JPEG, 100, fos );
@@ -146,8 +146,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		mHolder = getHolder(); 
 		mHolder.addCallback(this); 
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-	    longitude = longit;
-	    latitude = latitude;
+	    monitor_sizeW = monitor_sizeX;
+	    monitor_sizeH = monitor_sizeY;
 		this.vtd = _vtd;
     	String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true&hl=zh-TW";
 		//String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longit;
@@ -333,13 +333,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	        	Log.i("ARC","3");
 	 	        e.printStackTrace();
 	 	    }
-	 		//轉換文字為JSONArray
-	 		/*try {
-	 			JSONObject jsnJsonObject = new JSONObject(result);
-	 		} catch(JSONException e) {
-	 			Log.i("ARC","2C" + e.getMessage());
-	 			e.printStackTrace();
-	 		}*/
 
 	    return jsonArray;
 	    }
