@@ -112,13 +112,13 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	    	cv.drawText(date, locationX, locationY, vtd.TimePaint);
 	    	
 			locationX = monitor_sizeW/15; 
-			locationY = (monitor_sizeH/16)*12;
+			locationY = (monitor_sizeH/18)*14;
 	    	cv.drawText(cityid, locationX, locationY, vtd.CityPaint);
-			locationX = (monitor_sizeW/15)*7; 
-			locationY = (monitor_sizeH/16)*12;
+			locationX = (monitor_sizeW/15)*4; 
+			locationY = (monitor_sizeH/18)*14;
 	    	cv.drawText(villageid, locationX, locationY, vtd.TimePaint);
 			locationX = (monitor_sizeW/15); 
-			locationY = (monitor_sizeH/16)*13;
+			locationY = (monitor_sizeH/18)*15;
 	    	cv.drawText(streetid, locationX, locationY, vtd.TimePaint);
 	    	
 		    cv.save( Canvas.ALL_SAVE_FLAG );//保存
@@ -149,7 +149,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 	    monitor_sizeW = monitor_sizeX;
 	    monitor_sizeH = monitor_sizeY;
 		this.vtd = _vtd;
-    	String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true&hl=zh-TW";
+    	String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longit+"&sensor=true&&language=zh-TW";
 		//String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longit;
 		//String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=23.0167143,120.2107831&sensor=true&hl=zh-CN";
 		Log.i("ARC",url);

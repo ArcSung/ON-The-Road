@@ -123,13 +123,13 @@ public class CameraViewToDraw extends View{
     	canvas.drawText(date, locationX, locationY, TimePaint);
     	
 		locationX = imgWidth/15; 
-		locationY = (imgHeight/16)*12;
+		locationY = (imgHeight/18)*14;
     	canvas.drawText(cityid, locationX, locationY, CityPaint);
-		locationX = (imgWidth/15)*7; 
-		locationY = (imgHeight/16)*12;
+		locationX = (imgWidth/15)*4; 
+		locationY = (imgHeight/18)*14;
     	canvas.drawText(villageid, locationX, locationY, TimePaint);
 		locationX = (imgWidth/15); 
-		locationY = (imgHeight/16)*13;
+		locationY = (imgHeight/18)*15;
     	canvas.drawText(streetid, locationX, locationY, TimePaint);
     	
 	}
