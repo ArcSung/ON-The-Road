@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -26,6 +27,7 @@ public class CameraPreviewActivity extends Activity {
     final int Camera_start_preview = 0;
     final int Camera_stop_preview  = 1;
     final int Camera_save_picture  = 2;
+    final int Camera_close_camera  = 3;
     CameraView cameraView;
 	Bitmap newb;
 	
@@ -67,8 +69,10 @@ public class CameraPreviewActivity extends Activity {
         ImageButton_Cancel.setOnClickListener(ImageButtonlistener);
         ImageButton_Check_Grolloc.setOnClickListener(ImageButtonlistener);
         
+        ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
+        ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
         ImageButton_Cancel.setVisibility(View.GONE);
-        ImageButton_Check_Grolloc.setVisibility(View.GONE);
+        //ImageButton_Check_Grolloc.setVisibility(View.GONE);
  
         //產生攝影機預覽surfaceView
         cameraView = new CameraView(this, dtw, this.getApplicationContext(), longitude, latitude, metrics.widthPixels, metrics.heightPixels);
@@ -120,6 +124,17 @@ public class CameraPreviewActivity extends Activity {
 		    } 
 	};
     
+	
+	 public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+	        if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+	        {   
+	        	cameraView.onButtonCheck(Camera_close_camera);
+	        	CameraPreviewActivity.this.finish();//關閉activity
+	            return true;  
+	        }  
+	        return super.onKeyDown(keyCode, event);  
+	  }
 
 	
 	private void Dialog(Bitmap photo)

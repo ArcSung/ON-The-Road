@@ -45,6 +45,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
     final int Camera_start_preview = 0;
     final int Camera_stop_preview  = 1;
     final int Camera_save_picture  = 2;
+    final int Camera_close_camera  = 3;
 	
 	int rgb[];
 	int locat[];
@@ -80,6 +81,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 		{	
 			mycamera.stopPreview();
 		}	 
+		else if(flag == Camera_close_camera)
+		{	
+			mycamera.stopPreview();
+		}
 		else if (flag == Camera_start_preview)
 		{	
 			mycamera.startPreview();
@@ -92,20 +97,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		    Date curDate = new Date(System.currentTimeMillis());
 		    String date = formatter.format(curDate);
-
-		    	//JSONArray obj = getJson("http://linarnan.co");
-		    	/*try {
-		    		 
-		    		 
-					for(int i = 0; i< obj.length();i++){
-						String id = String.valueOf(i);
-						JSONObject data = obj.getJSONObject(i);
-						Log.d("show",data.getString("Name"));
-					}
-		 
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}*/
 		    	
 		    whitePaint.setColor(Color.WHITE);
 			whitePaint.setStyle(Paint.Style.FILL);
@@ -120,7 +111,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, C
 			whitePaint2.setTypeface(Typeface.MONOSPACE);
 		    	
 		    //create the new blank bitmap
-		    newb = Bitmap.createBitmap( 1080, 1920, Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
+		    newb = Bitmap.createBitmap( pickedW, pickedH, Bitmap.Config.RGB_565 );//創建一個新的和SRC長度寬度一樣的點陣圖
 		    Canvas cv = new Canvas( newb );
 		    //draw src into
 		    cv.drawBitmap( image2, 0, 0, null );//在 0，0座標開始畫入src
