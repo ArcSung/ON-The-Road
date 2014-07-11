@@ -1,9 +1,12 @@
 package com.arc.on_the_road;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,14 +36,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 
 public class SearchActivity extends Activity {
 	
 	private ListView listData = null;	
-	JSONArray jsonArrayMain = null;
-	JSONArray jsonArrayMain2 = null;
 	ImageButton    pepole_info_button;
 	ImageButton    search_button;
+	
+	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,7 @@ public class SearchActivity extends Activity {
 	    search_button.setOnClickListener(new ImageButton.OnClickListener() {
 			   public void onClick(View v)
 				{
-				  // showInList();
+				  showInList();
 
 				}
 		});
@@ -84,32 +90,6 @@ public class SearchActivity extends Activity {
 		
     }
 	
-	public boolean onTouchEvent(MotionEvent event)
-	{
-        //if(event.getAction() == MotionEvent.ACTION_UP){
-        int X= (int)event.getX();
-        int Y= (int)event.getY();
-        Log.i("Arc","X"+X+"Y"+Y);
-
-        	//showInList();        
-        //}
-
-		return false;  	
-   }
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-	
-	private void Search_info(Double longitude, Double latitude){
-		
-		String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longitude;
-    	new HttpAsyncTask().execute(url);
-
-	}
-	
-
 	private void initView(){
 		listData = (ListView) findViewById(R.id.listData);
     	listData.setOnItemLongClickListener(new OnItemLongClickListener(){
@@ -125,18 +105,39 @@ public class SearchActivity extends Activity {
 		});
 	}
 	
-
-	    
-
+    private void showInList(){
+    	
+    	//Cursor cursor = getCursor();
+    	
+    	 for(int i=0; i<mPathStart.length; i++)
+    	 {
+    		 HashMap<String,String> item = new HashMap<String,String>();
+    		 item.put("PathStart", mPathStart[i]);
+    		 item.put("PathEnd", mPathEnd[i]);
+    		 item.put("Distance",mDistance[i]+"m");
+    		
+    		 list.add( item );
+    	}
+    	
+    	//新增SimpleAdapter
+    	SimpleAdapter adapter = new SimpleAdapter( 
+    	 this, 
+    	 list,
+    	 R.layout.search_data_item,
+    	 new String[] { "PathStart","PathEnd","Distance"},
+    	 new int[] { R.id.txtPathStart, R.id.txtPathEnd, R.id.txtDistance} );
+    	 
+    	 //ListActivity設定adapter
+    	listData.setAdapter( adapter );
+    }
     
+	private void Search_info(Double longitude, Double latitude){
+		
+		String url = "http://linarnan.co:3000/roadhelper/aloha?lat="+latitude+"&lng="+longitude;
+    	//new HttpAsyncTask().execute(url);
 
-    
-
-
-
-
+	}
 	
-
 	private void SQLdb_Dialog(final long RowID)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -187,114 +188,27 @@ public class SearchActivity extends Activity {
 	    setting_dialog.show();
 	}
 	
-	public static JSONArray  GET(String url){
-        InputStream inputStream = null;
-        String result = "";
-        JSONArray jsonArray = null;
-        try {
- 
-            // create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
- 
-            // make GET request to the given URL
-            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
- 
-            // receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
- 
-            // convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-        
-     // 讀取回應
-     		try {
-     			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf8"),9999999);
-     			//99999為傳流大小，若資料很大，可自行調整
-     			StringBuilder sb = new StringBuilder();
-     			String line = null;
-     			while ((line = reader.readLine()) != null) {
-     				//逐行取得資料
-     				sb.append(line + "\n");
-     			}
-     			inputStream.close();
-     			result = sb.toString();
-     		} catch(Exception e) {
-     			e.printStackTrace();
-     		}
-     		//String strJson="{\n\"000000000000000\": [\n    {\n        \"employee_boycode\": \"00\",\n        \"id\": \"000\",\n        \"address\": \"abcdef\",\n        \"name\": \"name\",\n        \"bankcode\": \"abc\",\n        \"branch_name\": \"abcd\",\n        \"account_no\": \"789\"\n    }\n]\n}\n";
-
-     	    try {
-     	    JSONObject jsnJsonObject = new JSONObject(result);
-
-
-     	   JSONArray contacts = jsnJsonObject.getJSONArray("hasDigs");
-
-       
-     	           for(int i =0; i< contacts.length(); i ++)
-     	           { 
-     	        	   
-     					String id = String.valueOf(i);
-     					JSONObject data = contacts.getJSONObject(i);
-     					String location = data.getString("location");
-     					String comp = data.getString("placeholder");
-     					Boolean flag = data.getBoolean("isOnRoadFlatenProject");
-     	          //cityid = contacts.getString("city");
-     	          //villageid = contacts.getString("village");
-     	          //streetid = contacts.getString("street");
-     	            Log.i("Parsed data is",":"+location+", "+comp+ ", "+flag);
-     	            String YesOrNol;
-     	            if(flag = true)
-     	            	YesOrNol = "Yes";
-     	            else
-     	            	YesOrNol = "No";
-     	           //add(location, comp, YesOrNol);
-     	           }   
-     	        
-
-     	    } catch (JSONException e) {
-            	Log.i("ARC","3");
-     	        e.printStackTrace();
-     	    }
-     		//轉換文字為JSONArray
-     		/*try {
-     			JSONObject jsnJsonObject = new JSONObject(result);
-     		} catch(JSONException e) {
-     			Log.i("ARC","2C" + e.getMessage());
-     			e.printStackTrace();
-     		}*/
- 
-        return jsonArray;
-    }
 	
-	private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
- 
-        inputStream.close();
-        return result;
- 
-    }
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 	
-	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
- 
-        	jsonArrayMain = GET(urls[0]); 
-            return "OK";
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-
-       }
-    }
+	
+	private static final String[] mPathStart = new String[] {
+		 "國安街56巷121弄","北安路三段412-1號","西門路三段466號"
+	};
+	
+	private static final String[] mPathEnd = new String[] {
+		 "國安街156巷156弄"," "," "
+	};
+	
+	private static final String[] mDistance= new String[] {
+		 "50","350","450"
+	};
+	
+	private static final Boolean[] mRoadFlating= new Boolean[] {
+		 false, false, false
+	};
     
 }

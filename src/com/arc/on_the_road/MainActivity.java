@@ -136,7 +136,6 @@ public class MainActivity extends Activity {
 		            break;
 		            case R.id.index_search:
 		            	Log.i("On the road index", "search");
-		            	Log.i("On the road index", "camera");
 		            	Intent intent_search = new Intent();
 		            	intent_search.putExtra("longitude", longitude);
 		            	intent_search.putExtra("latitude", latitude);

@@ -25,13 +25,14 @@
         android:layout_alignParentBottom="true"
         android:background="#ff606060"
         android:src="@drawable/search_noinfo" />
-    	
+
     	<ListView
-       	android:id="@+id/listData"
-       	android:layout_width="fill_parent"
-       	android:layout_height="wrap_content"
-       	android:layout_above="@+id/Search_camera_image"
-       	android:background="#ff6593C1" >
+    	    android:id="@+id/listData"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentLeft="true"
+    	    android:layout_alignParentTop="true"
+    	    android:background="@color/blue" >
     	</ListView>
     	
     </RelativeLayout>	
