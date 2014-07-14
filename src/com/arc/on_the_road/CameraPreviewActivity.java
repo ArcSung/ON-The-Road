@@ -38,7 +38,8 @@ public class CameraPreviewActivity extends Activity {
 	
 	ImageButton ImageButton_TakePicture;
 	ImageButton ImageButton_Cancel;
-	ImageButton ImageButton_Check_Grolloc;
+	ImageButton ImageButton_Check;
+	ImageButton ImageButton_Gralloc;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,17 +66,18 @@ public class CameraPreviewActivity extends Activity {
         //dtw.setSize(metrics.widthPixels, metrics.heightPixels); //#2
         
         ImageButton_TakePicture = (ImageButton)findViewById(R.id.camera_takepicture);
-        ImageButton_Cancel    = (ImageButton)findViewById(R.id.camera_cancel);
-        ImageButton_Check_Grolloc      = (ImageButton)findViewById(R.id.camera_check_grolloc);
+        ImageButton_Cancel      = (ImageButton)findViewById(R.id.camera_cancel);
+        ImageButton_Check       = (ImageButton)findViewById(R.id.camera_check);
+        ImageButton_Gralloc     = (ImageButton)findViewById(R.id.camera_gralloc);
         
         ImageButton_TakePicture.setOnClickListener(ImageButtonlistener);
         ImageButton_Cancel.setOnClickListener(ImageButtonlistener);
-        ImageButton_Check_Grolloc.setOnClickListener(ImageButtonlistener);
+        ImageButton_Check.setOnClickListener(ImageButtonlistener);
+        ImageButton_Gralloc.setOnClickListener(ImageButtonlistener);
         
-        ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
-        ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
+        ImageButton_Check.setVisibility(View.GONE);
         ImageButton_Cancel.setVisibility(View.GONE);
-        //ImageButton_Check_Grolloc.setVisibility(View.GONE);
+        
         
         createDirIfNotExists("/sdcard/ON_THE_ROAD/");
  
@@ -96,8 +98,8 @@ public class CameraPreviewActivity extends Activity {
 	            	case R.id.camera_takepicture:	
 	            		cameraView.onButtonCheck(Camera_stop_preview);
 	            		ImageButton_Cancel.setVisibility(View.VISIBLE);
-	            		ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
-	            		ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_check);
+	            		ImageButton_Check.setVisibility(View.VISIBLE);
+	            		ImageButton_Gralloc.setVisibility(View.GONE);
 	                    ImageButton_TakePicture.setVisibility(View.GONE);	
 	                    Camera_button_check = true;
 		            break;
@@ -105,26 +107,26 @@ public class CameraPreviewActivity extends Activity {
 	            	case R.id.camera_cancel:
 	            		cameraView.onButtonCheck(Camera_start_preview);
 	            		ImageButton_Cancel.setVisibility(View.GONE);
-	            		ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
-	            		ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
+	            		ImageButton_Check.setVisibility(View.VISIBLE);
+	            		ImageButton_Gralloc.setVisibility(View.VISIBLE);
 	                    ImageButton_TakePicture.setVisibility(View.VISIBLE);
 	                    Camera_button_check = false;
 		            break;
-	            	case R.id.camera_check_grolloc:
-	            		if(Camera_button_check = true) //stop preview state
-	            		{	
-	            			cameraView.onButtonCheck(Camera_save_picture);
-	            			cameraView.onButtonCheck(Camera_start_preview);
-	            			ImageButton_Cancel.setVisibility(View.GONE);
-	            			ImageButton_Check_Grolloc.setVisibility(View.VISIBLE);
-	            			ImageButton_Check_Grolloc.setBackgroundResource(R.drawable.camera_grolloc);
-	            			ImageButton_TakePicture.setVisibility(View.VISIBLE);
-	            			Camera_button_check = false;
-	            		}
-	            		else     //start preview state
-	            		{
-	            			
-	            		}	
+	            	case R.id.camera_check:
+	            		cameraView.onButtonCheck(Camera_save_picture);
+	            		cameraView.onButtonCheck(Camera_start_preview);
+	            		ImageButton_Cancel.setVisibility(View.GONE);
+	            		ImageButton_Check.setVisibility(View.GONE);
+	            		ImageButton_Gralloc.setVisibility(View.VISIBLE);
+	            		ImageButton_TakePicture.setVisibility(View.VISIBLE);
+	            		Camera_button_check = false;
+
+	    					
+	            	case R.id.camera_gralloc:	
+	            		cameraView.onButtonCheck(Camera_stop_preview);
+            		    Intent intent = new Intent();
+    					intent.setClass(CameraPreviewActivity.this,GridviewActivity.class);
+    					startActivityForResult(intent, 0);
 	               break;
 		        }
 		    } 

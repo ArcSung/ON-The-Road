@@ -42,12 +42,21 @@
 		    	android:src="@drawable/camera_cancel" />
 		
 			<ImageButton
-		    	android:id="@+id/camera_check_grolloc"
+		    	android:id="@+id/camera_check"
 		    	android:layout_width="65dp"
 		    	android:layout_height="65dp"
 		    	android:layout_alignParentBottom="true"
 		    	android:layout_alignParentRight="true"
-		    	android:background="#00606060" />
+		    	android:background="#00606060" 
+		    	android:src="@drawable/camera_check" />
+			<ImageButton
+		    	android:id="@+id/camera_gralloc"
+		    	android:layout_width="65dp"
+		    	android:layout_height="65dp"
+		    	android:layout_alignParentBottom="true"
+		    	android:layout_alignParentRight="true"
+		    	android:background="#00606060" 
+		    	android:src="@drawable/camera_gralloc" />
 		</RelativeLayout>
 
 	</RelativeLayout>

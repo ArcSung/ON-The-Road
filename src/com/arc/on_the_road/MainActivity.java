@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 	private static final int ACTIVITY_SELECT_CAMERA = 0;
 	private static final int ACTIVITY_SELECT_Search = 1;
 	private static final int ACTIVITY_SELECT_Phone = 2;
-	private static final int ACTIVITY_SELECT_Grolloc = 3;
+	private static final int ACTIVITY_SELECT_Gralloc = 3;
 	private static final int ACTIVITY_SELECT_People = 4;
 
 	@Override
@@ -144,6 +144,9 @@ public class MainActivity extends Activity {
 		            break;
 		            case R.id.index_gralloc:
 		            	Log.i("On the road index", "gralloc");
+		            	Intent intent_gralloc = new Intent();
+		            	intent_gralloc.setClass(MainActivity.this,GridviewActivity.class);
+		    			startActivityForResult(intent_gralloc, ACTIVITY_SELECT_Gralloc);
 		            break;
 		            case R.id.index_phone:
 		            	Log.i("On the road index", "phone");
@@ -178,7 +181,7 @@ public class MainActivity extends Activity {
 			try {
 			} catch (Exception e) {}			
 		}
-		else if (requestCode == ACTIVITY_SELECT_Grolloc ) 
+		else if (requestCode == ACTIVITY_SELECT_Gralloc ) 
 		{
 
 			try {

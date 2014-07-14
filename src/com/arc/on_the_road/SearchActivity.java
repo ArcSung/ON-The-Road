@@ -76,8 +76,6 @@ public class SearchActivity extends Activity {
 					intent.putExtra("longitude",longitude); 
 					intent.putExtra("latitude",latitude);
 					startActivityForResult(intent, 0);
-
-
 				}
 		});  
 	    
