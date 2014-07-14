@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class SearchActivity extends Activity {
 	
@@ -58,6 +59,8 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.search_layout);
         
         initView();
+        
+        showInList();
         
         Intent intent = getIntent(); 
         final Double longitude = intent.getDoubleExtra("longitude", 0);
@@ -98,7 +101,7 @@ public class SearchActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int pos, long id) {
 				// TODO Auto-generated method stub
-				SQLdb_Dialog(id);
+				Search_Dialog(id);
 				return false;
 			}
 			
@@ -138,23 +141,18 @@ public class SearchActivity extends Activity {
 
 	}
 	
-	private void SQLdb_Dialog(final long RowID)
+	private void Search_Dialog(final long RowID)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		//init SQL
-	    //Cursor cursor = fetehData(RowID);
-    	    	
-    	//final String Path_db   = cursor.getString(1);
-    	//final String Company_db   = cursor.getString(2);
-    	//String Date_db = cursor.getString(3);
+
 		
 		// Setting_Dialog UI set up
 		LinearLayout linear=new LinearLayout(this);
 		linear.setOrientation(1);
 		
-		linear.setBackgroundColor(Color.rgb(60,60, 60));
+		linear.setBackgroundColor(Color.rgb(60,60,60));
 		ImageView PhotoImage = new ImageView(this);	
-		PhotoImage.setImageResource(R.drawable.pushcar);
+		PhotoImage.setImageResource(R.drawable.search_pushcar);
 		linear.addView(PhotoImage);
 		/*if(Date_db == "Yes")
 		{	
@@ -163,25 +161,42 @@ public class SearchActivity extends Activity {
 			road.setTextColor(Color.rgb(255,255,0));;
 			road.setText("路平專案中");
 			linear.addView(road);
-		}
+		}*/
 				
-		TextView DateText = new TextView(this);
-		DateText.setTextSize(20);
-		DateText.setTextColor(Color.rgb(255,255, 255));;
-		DateText.setText("路段: "+Path_db);
+		TextView PathStartText = new TextView(this);
+		PathStartText.setTextSize(20);
+		PathStartText.setTextColor(Color.rgb(255,255, 255));;
+		PathStartText.setText("起 "+mPathStart[(int)RowID]);
 				
-		TextView TimeText = new TextView(this);
-		TimeText.setTextSize(20);
-		TimeText.setTextColor(Color.rgb(255,255, 255));;
-		TimeText.setText("公司: "+Company_db);
-			
-					
+		TextView PathPathEndText = new TextView(this);
+		PathPathEndText.setTextSize(20);
+		PathPathEndText.setTextColor(Color.rgb(255,255, 255));;
+		PathPathEndText.setText("終 "+mPathEnd[(int)RowID]);
 		
-	    linear.addView(DateText);
-	    linear.addView(TimeText);
+		TextView SpaceText = new TextView(this);
+		SpaceText.setTextSize(20);
+		SpaceText.setTextColor(Color.rgb(255,255,255));;
+		SpaceText.setText("");
+		
+		TextView CompanyText = new TextView(this);
+		CompanyText.setTextSize(20);
+		CompanyText.setTextColor(Color.rgb(255,255,255));;
+		CompanyText.setText(mCompany[(int)RowID]);
+		
+		TextView PhoneText = new TextView(this);
+		PhoneText.setTextSize(20);
+		PhoneText.setTextColor(Color.rgb(255,255,255));;
+		PhoneText.setText("電話 ");
+				
+		
+	    linear.addView(PathStartText);
+	    linear.addView(PathPathEndText);
+	    linear.addView(SpaceText);
+	    linear.addView(CompanyText);
+	    linear.addView(PhoneText);
 
 
-	    builder.setView(linear); */
+	    builder.setView(linear); 
 				
 	    
 	    AlertDialog setting_dialog = builder.create();
@@ -208,7 +223,11 @@ public class SearchActivity extends Activity {
 	};
 	
 	private static final Boolean[] mRoadFlating= new Boolean[] {
-		 false, false, false
+		 false, false, true
+	};
+	
+	private static final String[] mCompany= new String[] {
+		"龍泉水資源股份公司", "宏達電子股份公司", "威盛電子股份公司"
 	};
     
 }
