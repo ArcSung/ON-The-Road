@@ -104,27 +104,35 @@ public class GridviewActivity extends Activity {
      }
 
      public void setImageView(int position){
-          Bitmap bm = BitmapFactory.decodeFile(imagePaths.get(position));
+          //Bitmap bm = BitmapFactory.decodeFile(imagePaths.get(position));
           //imageView.setImageBitmap(bm);
-          imageView.setAdapter(new SamplePagerAdapter());
+          imageView.setAdapter(new SamplePagerAdapter(GridviewActivity.this, imagePaths));
           imageView.setVisibility(View.VISIBLE);
           gridView.setVisibility(View.GONE);
      }
      
  	static class SamplePagerAdapter extends PagerAdapter {
 
-		private static final int[] sDrawables = { R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper,
-				R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper };
+		//private static final int[] sDrawables = { R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper,
+		//		R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper };
+		
+		private List<String> mListViews;
+		
+	    public SamplePagerAdapter(Context context, List<String> mListViews) 
+	    {  
+	           this.mListViews = mListViews;
+	    }  
 
 		@Override
 		public int getCount() {
-			return sDrawables.length;
+			return mListViews.size();
 		}
 
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
 			PhotoView photoView = new PhotoView(container.getContext());
-			photoView.setImageResource(sDrawables[position]);
+			//photoView.setImageResource(sDrawables[position]);
+			photoView.setImageBitmap(BitmapFactory.decodeFile(mListViews.get(position)));
 
 			// Now just add PhotoView to ViewPager and return it
 			container.addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);

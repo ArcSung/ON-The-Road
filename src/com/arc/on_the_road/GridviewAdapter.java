@@ -19,7 +19,7 @@ public class GridviewAdapter extends BaseAdapter {
 
     private ViewGroup layout;
     private Context context;
-    private List coll;
+    private List coll;   //存放縮圖的id
 
     public GridviewAdapter(Context context, List coll) {
 
