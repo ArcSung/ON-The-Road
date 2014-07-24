@@ -16,10 +16,10 @@
         >
     </GridView >
 
-    <ImageView
+    <com.arc.on_the_road.HackyViewPager
         android:id= "@+id/imageView1"
-        android:layout_width= "fill_parent"
-        android:layout_height= "fill_parent"
+        android:layout_width= "match_parent"
+        android:layout_height= "match_parent"
         android:gravity= "center"
         android:visibility= "gone"
         android:background= "#00000000"

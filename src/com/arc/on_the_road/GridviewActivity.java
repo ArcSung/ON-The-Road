@@ -3,6 +3,8 @@ package com.arc.on_the_road;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.senab.photoview.PhotoView;
+
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -14,12 +16,17 @@ import android.provider.MediaStore;
 import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 
 /*
  * MainActivity 
@@ -33,7 +40,7 @@ import android.widget.Toast;
 public class GridviewActivity extends Activity {
 
      private GridView gridView;
-     private ImageView imageView;
+     private ViewPager imageView;
      private List<String> thumbs;  //存放縮圖的id
      private List<String> imagePaths;  //存放圖片的路徑
      private GridviewAdapter imageAdapter;  //用來顯示縮圖
@@ -50,7 +57,7 @@ public class GridviewActivity extends Activity {
           setContentView(R.layout.gridview_layout);
 
           gridView = (GridView) findViewById(R.id.gridView1);
-          imageView = (ImageView) findViewById(R.id.imageView1);
+          imageView = (ViewPager) findViewById(R.id.imageView1);
 
           ContentResolver cr = getContentResolver();
           String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };  //初始 欄位  DATA 代表路徑
@@ -98,8 +105,42 @@ public class GridviewActivity extends Activity {
 
      public void setImageView(int position){
           Bitmap bm = BitmapFactory.decodeFile(imagePaths.get(position));
-          imageView.setImageBitmap(bm);
+          //imageView.setImageBitmap(bm);
+          imageView.setAdapter(new SamplePagerAdapter());
           imageView.setVisibility(View.VISIBLE);
           gridView.setVisibility(View.GONE);
      }
+     
+ 	static class SamplePagerAdapter extends PagerAdapter {
+
+		private static final int[] sDrawables = { R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper,
+				R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper };
+
+		@Override
+		public int getCount() {
+			return sDrawables.length;
+		}
+
+		@Override
+		public View instantiateItem(ViewGroup container, int position) {
+			PhotoView photoView = new PhotoView(container.getContext());
+			photoView.setImageResource(sDrawables[position]);
+
+			// Now just add PhotoView to ViewPager and return it
+			container.addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+			return photoView;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			container.removeView((View) object);
+		}
+
+		@Override
+		public boolean isViewFromObject(View view, Object object) {
+			return view == object;
+		}
+
+	}
 }
