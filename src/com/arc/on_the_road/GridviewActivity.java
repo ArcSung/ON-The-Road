@@ -106,7 +106,8 @@ public class GridviewActivity extends Activity {
      public void setImageView(int position){
           //Bitmap bm = BitmapFactory.decodeFile(imagePaths.get(position));
           //imageView.setImageBitmap(bm);
-          imageView.setAdapter(new SamplePagerAdapter(GridviewActivity.this, imagePaths));
+          imageView.setAdapter(new SamplePagerAdapter(GridviewActivity.this, imagePaths, position));
+          imageView.setCurrentItem(position);    //setup Image 為當初gridview點選的圖片 
           imageView.setVisibility(View.VISIBLE);
           gridView.setVisibility(View.GONE);
      }
@@ -117,10 +118,12 @@ public class GridviewActivity extends Activity {
 		//		R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper };
 		
 		private List<String> mListViews;
+		private int view_position;
 		
-	    public SamplePagerAdapter(Context context, List<String> mListViews) 
+	    public SamplePagerAdapter(Context context, List<String> mListViews, int position) 
 	    {  
 	           this.mListViews = mListViews;
+	           this.view_position = position;
 	    }  
 
 		@Override
